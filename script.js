@@ -8,6 +8,7 @@ var bookHeight = 0.3;
 var bookDepth = 0.05;
 var bookCoverWidth = bookWidth + 0.01;
 var bookCoverDepth = 0.01;
+var bookIsOpen = false;
 
 const book_front_cover = document.querySelector('#book-front-cover');
 var bfc = leftBottomFront(0, 0, 0, bookCoverWidth, bookHeight, bookCoverDepth);
@@ -47,12 +48,22 @@ const book_right = document.querySelector("#book-right");
                            
                            
 window.addEventListener("keydown", e => {
-    if (e.code == "KeyO") {
+    if (e.code == "KeyO" && bookIsOpen == false) {
         openBook();
+    };
+    if (e.code == "KeyC" && bookIsOpen == true) {
+        closeBook();
     };
 });
 
 function openBook() {
+    bookIsOpen = true;
+    book.emit("openBook");
+    book_left.emit("openBook");
+};
+
+function closeBook() {
+    bookIsOpen = false;
     book.emit("openBook");
     book_left.emit("openBook");
 };
